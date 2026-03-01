@@ -34,7 +34,12 @@ jobs:
       - name: Copy assets and HTML
         run: |
           cp -r assets out/
-          cp wasm/index.html out/
+          cp index.html out/
+
+      - name: Verify out/ directory
+        run: |
+          ls -la out/
+          test -f out/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
