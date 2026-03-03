@@ -2,10 +2,11 @@
 
 This repo show how to set up CI on a GitHub project for Bevy.
 
-It creates two workflows:
+It creates three workflows:
 
 * [CI](#CI)
 * [Release](#Release)
+* [GitHub Pages](#GitHub-Pages)
 
 ## CI
 
@@ -61,6 +62,29 @@ A new release will be available in GitHub, with the archives per platform availa
 The `git` commands above produced this release: [my-game-1.0](
 https://github.com/bevyengine/bevy_github_ci_template/releases/tag/my-game-1.0).
 
+## GitHub Pages
+
+Definition: [.github/workflows/gh-pages.yml](./.github/workflows/gh-pages.yml)
+
+This workflow runs on every push to the `main` branch and deploys the game as a live WebAssembly demo to **GitHub Pages**.
+
+The deployed demo is the primary way to see the game running without downloading any binaries. Once enabled, it will be available at:
+
+```
+https://<your-github-username>.github.io/<your-repo-name>/
+```
+
+### Enabling GitHub Pages
+
+To activate the deployment, go to your repository's **Settings → Pages** and set the source branch to `gh-pages`.
+
+### How it works
+
+1. The workflow builds the project for `wasm32-unknown-unknown`.
+2. `wasm-bindgen` generates the JS bindings and WASM binary in `./out`.
+3. The `assets/` folder and the HTML/JS files from `wasm/` are copied into `./out`.
+4. The `./out` directory is pushed to the `gh-pages` branch via [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages).
+
 ## Using the workflows in your own project
 
 If you would like to use the GitHub workflows included here for your own project, there are a few things you might have to adapt:
@@ -93,8 +117,6 @@ Licensed under either of
    ([LICENSE-CC0-1.0](LICENSE-CC0-1.0) or <https://creativecommons.org/publicdomain/zero/1.0/legalcode>)
 
 at your option.
-
-The Ducky sprite is CC-0 licensed by [Caz Creates Games](https://caz-creates-games.itch.io/ducky-2).
 
 ## Contribution
 
